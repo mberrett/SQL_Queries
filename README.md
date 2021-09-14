@@ -1,1 +1,1 @@
-# SQL_exercises
+# Practice SQL Problems
