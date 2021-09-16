@@ -12,7 +12,7 @@ LIMIT 4
 | 1300   | 1200     | M0024      | 12-01-01 05:05:31 |
 | 1200   | 1400     | M0025      | 12-01-01 06:45:18 |
 
-### Create Unique identifier for each conversation
+# Create Unique identifier for each conversation
 
 SELECT CASE WHEN sender > receiver THEN CONCAT(sender::varchar, receiver::varchar) 
        ELSE CONCAT(receiver::varchar, sender::varchar) END AS convo_id, message_id
@@ -20,8 +20,26 @@ FROM app_messages
 LIMIT 4
 
 # OUTPUT
-| convo_id     | message_id | timestamp         |
-| 12001100     | M0021      | 12-01-01 05:03:23 |
-| 12001100     | M0023      | 12-01-01 05:04:56 |
-| 13001200     | M0024      | 12-01-01 05:05:31 |
-| 14001200     | M0025      | 12-01-01 06:45:18 |
+| convo_id     | message_id | 
+| 12001100     | M0021      | 
+| 12001100     | M0023      | 
+| 13001200     | M0024      |
+| 14001200     | M0025      |
+
+
+# Count Unique conversations
+
+WITH tb1 AS 
+
+(SELECT CASE WHEN sender > receiver THEN CONCAT(sender::varchar, receiver::varchar) 
+       ELSE CONCAT(receiver::varchar, sender::varchar) END AS convo_id, message_id
+FROM app_messages
+LIMIT 4)
+
+SELECT COUNT(DISTINCT convo_id)
+FROM tb1
+
+# OUTPUT
+3
+
+
