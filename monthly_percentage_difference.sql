@@ -21,7 +21,7 @@ WITH month_level as (SELECT TO_CHAR(created_at, 'YYYY-MM') as year_month,
 lagged as (SELECT year_month, month_rev, LAG(month_rev) OVER(ORDER BY year_month asc) as prev_month_rev
 FROM month_level)
 
-SELECT month, ROUND((month_rev - prev_month_rev)/prev_month_rev*100,2) as perc_diff
+SELECT year_month, ROUND((month_rev - prev_month_rev)/prev_month_rev*100,2) as perc_diff
 FROM lagged
 
 
