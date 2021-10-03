@@ -8,8 +8,8 @@
 --The first two months will not be a true 3-month rolling average since we are not given data from last year.
 
 customer_purchases
-user_id  |   int
-created_at  |  datetime
+user_id      |  int
+created_at   |  datetime
 purchase_amt |  int
 
 
