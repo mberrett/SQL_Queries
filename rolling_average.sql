@@ -13,16 +13,14 @@ created_at   |  datetime
 purchase_amt |  int
 
 
-WITH date_lever as 
-(SELECT user_id, purchase_amt, TO_CHAR(created_at, 'YYYY-MM') as year_month
-FROM customer_purchases),
-
-month_level as (SELECT sum(purchase_amt) as monthly_purchase, year_month
-FROM date_lever
+WITH month_level  as 
+(SELECT SUM(purchase_amt) as monthly_purchase, 
+        TO_CHAR(created_at, 'YYYY-MM') as year_month
+FROM amazon_purchases
 WHERE purchase_amt > 0
-GROUP by year_month
-ORDER by year_month)
+GROUP by 2
+ORDER by 2)
 
-SELECT year_month, avg(monthly_purchase) over(ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) three_month_avg
+SELECT year_month, AVG(monthly_purchase) OVER(ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) three_month_avg
 FROM month_level
 
