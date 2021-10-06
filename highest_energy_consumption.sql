@@ -21,7 +21,8 @@ UNION
 SELECT date FROM
 NA),
 
-global as (SELECT g.date, coalesce(a.consumption,0) as asia_consumption,
+--coalesce to get replace NaNs with 0's 
+global as (SELECT g.date, coalesce(a.consumption,0) as asia_consumption, 
  coalesce(e.consumption, 0) as eu_consumption, 
  coalesce(na.consumption, 0) as na_consumption,
  coalesce(a.consumption,0) + coalesce(e.consumption,0) + coalesce(na.consumption,0) as total_energy
